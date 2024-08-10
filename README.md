@@ -42,14 +42,14 @@
 #   ```
 
 #4. **Interact with the Interface:**
-#   * **Choose a Scenario:**  Select a pre-defined scenario (Thriller) or input your own custom scenario in the provided text box.
-#   * **Select a Voice Model:** Choose from different voice models, including OpenVoice, xttsv2, yourtts, or UnrealSpeech.
-#   * **Select LLM Source:** Choose between "Local" (using your local LLM server) or "Groq" (using the Groq API).
-#   * **Reference Audio (Optional):** Upload audio to clone the voice of the story with your own voice. This will personalize the narration with your voice.
-#   * **Voice Style:** Select a specific voice style (e.g., whispering, cheerful, angry) for the story's narration.
-#   * **Enable Image Generation:**  Enable this option to see AI-generated images of the story scenes.
-#   * **Start Story:** Click the "Start Story" button to begin your adventure. 
-#   * **Speak your Choices:** The game will listen to your voice commands.  Choose from the options presented to advance the story.
+**Choose a Scenario:**  Select a pre-defined scenario (Thriller) or input your own custom scenario in the provided text box.
+**Select a Voice Model:** Choose from different voice models, including OpenVoice, xttsv2, yourtts, or UnrealSpeech.
+**Select LLM Source:** Choose between "Local" (using your local LLM server) or "Groq" (using the Groq API).
+**Reference Audio (Optional):** Upload audio to clone the voice of the story with your own voice. This will personalize the narration with your voice.
+**Voice Style:** Select a specific voice style (e.g., whispering, cheerful, angry) for the story's narration.
+**Enable Image Generation:**  Enable this option to see AI-generated images of the story scenes.
+**Start Story:** Click the "Start Story" button to begin your adventure. 
+**Speak your Choices:** The game will listen to your voice commands.  Choose from the options presented to advance the story.
 
 ### Functionality Overview
 
@@ -63,15 +63,14 @@
 
 ### Code Structure
 
-#* **main.py:**  The main entry point for the application. Initializes the Gradio interface and starts the story service.
-#* **ui/gradio_interface.py:**  Contains the Gradio UI code, defining the user interface elements and their interactions.
-#* **services:**  A directory containing various service modules:
-#    * **story_service.py:**  Handles the logic for generating the story, managing messages, and interacting with the LLM.
-#    * **audio_service.py:**  Responsible for generating and playing audio, using the selected voice model and style.
-#    * **image_service.py:**  Handles the image generation process, utilizing the Segmind API.
-#* **aimodels:**  A directory containing code for AI models:
-#    * **llm_models.py:**  Defines different LLM models (LocalLLMModel and GroqLLMModel) for generating responses.
-#    * **tts_models.py:**  Contains code for TTS models, including OpenVoiceModel.
+**main.py:**  The main entry point for the application. Initializes the Gradio interface and starts the story service.
+**ui/gradio_interface.py:**  Contains the Gradio UI code, defining the user interface elements and their interactions.
+**services:**  A directory containing various service modules:**story_service.py:**  Handles the logic for generating the story, managing messages, and interacting with the LLM.
+**audio_service.py:**  Responsible for generating and playing audio, using the selected voice model and style.
+**image_service.py:**  Handles the image generation process, utilizing the Segmind API.
+**aimodels:**  A directory containing code for AI models:
+**llm_models.py:**  Defines different LLM models (LocalLLMModel and GroqLLMModel) for generating responses.
+**tts_models.py:**  Contains code for TTS models, including OpenVoiceModel.
 
 ### Deployment
 
