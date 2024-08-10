@@ -27,9 +27,10 @@
 
 #1. **Install Requirements:**  Make sure you have all the necessary libraries installed. You can install them with:
 
-#   ```bash
-#   pip install -r requirements.txt
-#   ```
+```
+bash
+pip install -r requirements.txt
+```
 
 #2. **Setup Environment Variables:**
 **GROQ_API_KEY:**  Set the `GROQ_API_KEY` environment variable to your Groq API key if you plan on using Groq for LLM generation. You can find your Groq API key in your Groq account settings. 
@@ -37,9 +38,10 @@
 
 #3. **Run the Program:**
 
-#   ```bash
-#   python main.py 
-#   ```
+```
+bash
+python main.py 
+```
 
 #4. **Interact with the Interface:**
 **Choose a Scenario:**  Select a pre-defined scenario (Thriller) or input your own custom scenario in the provided text box.
@@ -76,32 +78,37 @@
 
 #You can deploy the application using Docker. Create a Dockerfile with the following contents:
 
-#```dockerfile
-#FROM python:3.9
 
-#WORKDIR /app
+```
+dockerfile
+FROM python:3.9
 
-#COPY requirements.txt ./
-#RUN pip install --no-cache-dir -r requirements.txt
+WORKDIR /app
 
-#COPY . .
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
 
-#EXPOSE 7860
+COPY . .
 
-#CMD ["python", "main.py"]
-#```
+EXPOSE 7860
+
+CMD ["python", "main.py"]
+```
 
 #Then, build the Docker image:
 
-#```bash
-#docker build -t choose-your-own-adventure .
-#```
+```
+bash
+docker build -t choose-your-own-adventure .
+
+```
 
 #Finally, run the container:
 
-#```bash
-#docker run -p 7860:7860 choose-your-own-adventure
-#```
+```
+bash
+docker run -p 7860:7860 choose-your-own-adventure
+```
 
 ### Example
 
