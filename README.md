@@ -32,8 +32,8 @@
 #   ```
 
 #2. **Setup Environment Variables:**
-#   * **GROQ_API_KEY:**  Set the `GROQ_API_KEY` environment variable to your Groq API key if you plan on using Groq for LLM generation. You can find your Groq API key in your Groq account settings. 
-#   * **Local LLM Setup (Optional):** If you are using a local LLM server, ensure it is running and set the `BASE_URL` environment variable to your LLM server's base URL. You might also need to adjust the `API_KEY` variable in `aimodels/llm_models.py` depending on your LLM setup.
+**GROQ_API_KEY:**  Set the `GROQ_API_KEY` environment variable to your Groq API key if you plan on using Groq for LLM generation. You can find your Groq API key in your Groq account settings. 
+**Local LLM Setup (Optional):** If you are using a local LLM server, ensure it is running and set the `BASE_URL` environment variable to your LLM server's base URL. You might also need to adjust the `API_KEY` variable in `aimodels/llm_models.py` depending on your LLM setup.
 
 #3. **Run the Program:**
 
