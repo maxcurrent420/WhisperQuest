@@ -6,7 +6,7 @@
 
 **Voice-Controlled Interaction:** Speak your choices to advance the story, making it feel like a real interactive adventure. Feel free to make up crazy choices as you go along, and see how the llm responds!
 
-**Storytelling with Different Genres:**  Choose from the default Thriller scenario, Fantasy, or create your own custom story.
+**Storytelling with Different Genres:**  Choose from the default Thriller scenario, or create your own custom story.
 
 **Dynamic Voice Generation:**  The story can be spoken aloud with different voice styles if using OpenVoice, making the experience even more immersive.
 
