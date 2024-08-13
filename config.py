@@ -49,7 +49,7 @@ class GlobalState:
         self.ckpt_converter = '/home/maxcurrent/Documents/voiceclone/OpenVoice/openvoice/checkpoints/converter'
         self.en_ckpt_base = '/home/maxcurrent/Documents/voiceclone/OpenVoice/openvoice/checkpoints/base_speakers/EN'
         self.playback_speed = 0.7
-        self.unrealspeech_api_key = "9U3AQgPM2DgOzEoiL4rtg4hNxU8QyFK9B7twrN7YqU0gJvstAkDzey"    
+        self.unrealspeech_api_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"  #Set your UnrealSpeech key here if you want to try it- get one free at https://github.com/maxcurrent420/Verbal-AI-Storyteller
         self.paused = False
         self.message_queue = []
         self.scenario_type = "Thriller"
