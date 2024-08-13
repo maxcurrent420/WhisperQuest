@@ -11,7 +11,7 @@ class ImageService:
         self.url = "https://api.segmind.com/v1/flux-schnell"
         self.headers = {
             "Content-Type": "application/json",
-            "x-api-key": "SG_d50743ab27d82518"
+            "x-api-key": "YOUR-SEGMIND-API-KEY-HERE"
         }
 
     def generate_caption(self, llm_response):
