@@ -1,3 +1,6 @@
+***Modified Non-Commercial Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public
+License***
+
 ## AI Powered Verbal Choose Your Own Adventure Game
 
 # This program provides a fun and engaging interactive storytelling experience via voice input/output. 
