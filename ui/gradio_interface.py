@@ -42,7 +42,7 @@ def launch_interface(interactive_storyteller_func, global_state):
         with gr.Row():
             ref_audio = gr.Audio(label="Reference Audio", type="filepath")
             style = gr.Dropdown(label="Voice Style", choices=['default', 'whispering', 'cheerful', 'terrified', 'angry', 'sad', 'friendly'], value="default")
-            voice_model = gr.Dropdown(label="Voice Model", choices=['OpenVoice', 'xttsv2', 'yourtts','UnrealSpeech'], value="OpenVoice")
+            voice_model = gr.Dropdown(label="Voice Model", choices=['OpenVoice', 'xttsv2', 'yourtts','UnrealSpeech', 'edge_tts'], value="OpenVoice")
             llm_choice = gr.Radio(label="LLM Source", choices=["Local", "Groq"], value="Local")
             current_llm = gr.Textbox(label="Current LLM", value="Local", interactive=False)
             scenario = gr.Dropdown(label="Scenario", choices=['Thriller', 'Custom'], value="Thriller")
