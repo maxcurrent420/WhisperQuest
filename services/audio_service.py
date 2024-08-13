@@ -126,7 +126,7 @@ class AudioService:
             audio = self.yourtts_engine.generate_audio(text)
             sf.write(save_path, audio, self.yourtts_engine.sample_rate)
         elif self.current_model == "edge_tts":  # New case for edge_tts
-            voice = "en-GB-SoniaNeural"  # Set the desired voice
+            voice = "en-US-SteffanNeural"  # Set the desired voice
             output_file = os.path.join(self.output_dir, 'output.wav')  # Save as mp3 file
 
             async def generate_audio():
