@@ -109,7 +109,7 @@ python main.py
 
 ```
 dockerfile
-FROM python:3.9
+FROM python:3.10
 
 WORKDIR /app
 
@@ -127,7 +127,7 @@ CMD ["python", "main.py"]
 
 ```
 bash
-docker build -t choose-your-own-adventure .
+docker build -t storyteller .
 
 ```
 
@@ -135,7 +135,7 @@ docker build -t choose-your-own-adventure .
 
 ```
 bash
-docker run -p 7860:7860 choose-your-own-adventure
+docker run -p 7860:7860 storyteller
 ```
 
 ### Example
