@@ -11,8 +11,8 @@ from memory_profiler import profile
 
 @profile
 def launch_interface(interactive_storyteller_func, global_state):
-    en_ckpt_base = '/home/maxcurrent/Documents/voiceclone/OpenVoice/openvoice/checkpoints/base_speakers/EN'
-    ckpt_converter = '/home/maxcurrent/Documents/voiceclone/OpenVoice/openvoice/checkpoints/converter'
+    en_ckpt_base = '[Enter your full path to openvoice models/for/voice/cloning/support]'
+    ckpt_converter = '/enter/your/path/to/openvoice/checkpoints/converter'
     output_dir = 'outputs'
     
     # **Create AudioService here and store it in global_state**
@@ -37,7 +37,7 @@ def launch_interface(interactive_storyteller_func, global_state):
         global_state.image_service = ImageService(global_state.groq_api_key)
 
     with gr.Blocks() as demo:
-        gr.Markdown("# Open Interactive Voice-Controlled Choose Your Own Adventure Game!")
+        gr.Markdown("# Verbal AI Powered Choose Your Own Adventure Game!")
         
         with gr.Row():
             ref_audio = gr.Audio(label="Reference Audio", type="filepath")
