@@ -1,4 +1,4 @@
-## Open Interactive Verbal Choose Your Own Adventure Game
+## AI Powered Verbal Choose Your Own Adventure Game
 
 # This program provides a fun and engaging interactive storytelling experience controlled by your voice. 
 
