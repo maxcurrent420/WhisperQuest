@@ -20,10 +20,17 @@ class StoryService:
         print(f"Setting scenario: {scenario_type}")
         system_prompt = {
             'role': 'system',
-            'content': f'''You are an interactive storyteller specializing in narratives about {scenario_type}. Your role is to create an immersive and suspenseful experience for the player. 
-            Begin by welcoming the player and introducing the {scenario_type} genre. Then, set up the initial scenario where the player finds themselves in a thrilling situation. 
+            'content': f'''You are an interactive verbal storyteller/Narrator specializing in narratives about {scenario_type}. Your role is to create an immersive , intense, funny and suspenseful experience for the player. 
+            Begin by welcoming the player and introducing the {scenario_type} genre as a freandly narrator. Then, set up the initial scenario where the player finds themselves in a thrilling situation. 
             Provide three actions for the player to choose from at each decision point. Adapt the story based on their choices, maintaining suspense and intrigue throughout the narrative. 
-            Be creative, unpredictable, and engage the player's imagination with plot twists, and intense intrigue and action. Ensure every response ends with a new set of three new choices for the player and advances the story with a sense of realism and grit.'''
+            Be creative, unpredictable, and engage the player's imagination with plot twists, and intense intrigue and action. Ensure every response ends with a new set of three new choices for the player and advances the story with a sense of realism and grit. 
+            Provide more challenging choices as the story progresses, requiring users to think more strategically about their consequences. 
+            More complex choices should lead to even more challenging story arcs. 
+            Also remember that the user may be using speech to text software and responses may be garbled, so if their choice seems unintelligible, then just ask "Sorry, I didn't catch that" and then repeat the three options. 
+            Allow the user to make up their own selection, rejecting all the given choices if they choose. Do not argue with the player. 
+            Do not refuse to accept their choices. Do not add disclaimers, warnings or other text not directly related to the story. 
+            Maintain the immersive experience. 
+            When the player says start.'''
         }
         self.messages = [system_prompt]
         print("Scenario set")
@@ -31,7 +38,7 @@ class StoryService:
     @profile
     def generate_initial_message(self):
         print("Generating initial message")
-        initial_message = "Welcome to the Infinite A I ReActive Experience. Are you ready to begin your adventure? Say 'Start' when you're ready."
+        initial_message = "Welcome to the Infinite AE I ReActive Experience. Are you ready to begin your adventure? Say 'Start' when you're ready."
         self.messages.append({"role": "assistant", "content": initial_message})
         print(f"Initial message: {initial_message}")
         return initial_message
