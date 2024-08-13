@@ -38,7 +38,7 @@ class StoryService:
     @profile
     def generate_initial_message(self):
         print("Generating initial message")
-        initial_message = "Welcome to the Infinite AE I ReActive Experience. Are you ready to begin your adventure? Say 'Start' when you're ready."
+        initial_message = "Welcome to the Infinite A I ReActive Experience. Are you ready to begin your adventure? Say 'Start' when you're ready."
         self.messages.append({"role": "assistant", "content": initial_message})
         print(f"Initial message: {initial_message}")
         return initial_message
