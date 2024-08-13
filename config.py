@@ -28,7 +28,7 @@ import tempfile
 import os
 
 # Set environment variable for Groq API key (if you're using Groq)
-os.environ["GROQ_API_KEY"] = "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"  # Replace with your actual API key
+os.environ["GROQ_API_KEY"] = "gsk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"  # Replace with your actual API key
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
