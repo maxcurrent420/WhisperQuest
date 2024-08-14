@@ -1,5 +1,5 @@
 ***Modified Non-Commercial Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public
-License***
+License (Translation- free for all but you need to buy a license if gross revenues are above $100K***
 
 ***Please consider contributing, or donating if you enjoy my work:***
 
