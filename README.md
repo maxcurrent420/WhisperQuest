@@ -1,14 +1,13 @@
 ***Modified Non-Commercial Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public
 License***
 
-*** Please consider donating if you enjoy my work:
+***Please consider donating if you enjoy my work:***
 
-BTC: bc1q8lc4mzdtdyz7fx44vaw3jn8qg6w4c3ypfxpdrv
+***BTC: bc1q8lc4mzdtdyz7fx44vaw3jn8qg6w4c3ypfxpdrv***
 
-ETH/MATIC: 0x102a6fd187db8441d2cbead33ac70e87f382f114
+***ETH/MATIC: 0x102a6fd187db8441d2cbead33ac70e87f382f114***
 
-ZEC: t1LfMiD21xGkZYhD2XSNprKp6vf9xQdgd2E 
-***
+***ZEC: t1LfMiD21xGkZYhD2XSNprKp6vf9xQdgd2E***
 
 
 ## AI Powered Verbal Choose Your Own Adventure Game
