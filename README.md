@@ -1,7 +1,7 @@
 ***Modified Non-Commercial Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public
 License***
 
-***Please consider donating if you enjoy my work:***
+***Please consider contributing, or donating if you enjoy my work:***
 
 ***BTC: bc1q8lc4mzdtdyz7fx44vaw3jn8qg6w4c3ypfxpdrv***
 
