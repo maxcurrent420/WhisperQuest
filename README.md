@@ -1,5 +1,5 @@
 <p align="center">
-<img src="./images/Header.png" alt="WhisperQuest" title="WhisperQuest"/>
+<img src="./Header.png" alt="WhisperQuest" title="WhisperQuest"/>
 </p>
 
 
