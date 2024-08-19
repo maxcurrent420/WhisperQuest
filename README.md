@@ -104,9 +104,9 @@ python main.py
 
 ### Code Structure
 
-**main.py:**  The main entry point for the application. Initializes the Gradio interface and starts the story service.
+**main.py:**  The main entry point for the application. Initializes the Streamlit interface and starts the story service.
 
-**ui/gradio_interface.py:**  Contains the Gradio UI code, defining the user interface elements and their interactions.
+**ui/streamlit_ui.py:**  Contains the Streamlit UI code, defining the user interface elements and their interactions.
 
 **services:**  A directory containing various service modules:**story_service.py:**  Handles the logic for generating the story, managing messages, and interacting with the LLM.
 
