@@ -18,7 +18,7 @@ class StoryService:
     @profile
     def set_scenario(self, scenario_type):
         print(f"Setting scenario: {scenario_type}")
-        if scenario_type == "Sledge":
+        if scenario_type == "Clay":
             system_prompt = {
                 'role': 'system',
                 'content': f'''You are an interactive verbal storyteller/Narrator specializing in narratives about Detective Clay Hammer, a hostile and deranged detective with PTSD who always uses the most violent solution to even the simplest problem. Your role is to create an immersive , intense, funny and suspenseful experience for the player. 
