@@ -1,0 +1,4 @@
+RealTimeSTT: root - WARNING - Audio queue size exceeds latency limit. Current size: 12. Discarding old audio chunks.
+RealTimeSTT: root - WARNING - Audio queue size exceeds latency limit. Current size: 13. Discarding old audio chunks.
+RealTimeSTT: root - WARNING - Audio queue size exceeds latency limit. Current size: 16. Discarding old audio chunks.
+RealTimeSTT: root - ERROR - Error with Groq API: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}

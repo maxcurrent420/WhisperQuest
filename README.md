@@ -138,7 +138,7 @@ COPY . .
 
 EXPOSE 7860
 
-CMD ["python", "main.py"]
+CMD [streamlit run main.py]
 ```
 
 #Then, build the Docker image:
@@ -158,7 +158,7 @@ docker run -p 7860:7860 storyteller
 
 ### Example
 
-#1. Run the application: `python main.py`
+#1. Run the application: `streamlit run main.py`
 
 #2. Choose a scenario. Enter in your custom scenario, if desired.
 
@@ -179,4 +179,5 @@ docker run -p 7860:7860 storyteller
 #10. The story will continue based on your spoken choices.
 
 #Enjoy your immersive adventure!
+
 

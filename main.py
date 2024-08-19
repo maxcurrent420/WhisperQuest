@@ -1,10 +1,10 @@
 # --- main.py ---
-from ui.streamlit_ui import launch_interface  # Corrected import
+from ui.streamlit_ui import launch_interface
 #from utils.logging_config import setup_logging
 from services.story_service import interactive_storyteller
 from config import global_state
 import os
-os.environ["GROQ_API_KEY"] = "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"
+os.environ["GROQ_API_KEY"] = "gsk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 def main():
    # setup_logging()
