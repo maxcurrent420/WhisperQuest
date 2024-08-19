@@ -16,7 +16,6 @@ def launch_interface(story_function, global_state):
         initial_sidebar_state="expanded",
         menu_items={'About': "# WhisperQuest\nAn interactive storytelling experience."},
     )
-#1E88E5 22A8E5
     # Add custom CSS
     st.markdown("""
         <style>
@@ -39,7 +38,7 @@ def launch_interface(story_function, global_state):
     st.subheader("Embark on an interactive storytelling journey limited only by your imagination and token context!")
 
     # Scenario Selection
-    scenario_options = ["Custom", "Thriller", "Fantasy", "Sci-Fi", "Mystery"]
+    scenario_options = ["Custom", "Thriller", "Fantasy", "Sci-Fi", "Mystery", "Clay"]  # Added "Sledge"
     scenario = st.selectbox("Choose a scenario:", scenario_options, key="scenario")
     user_custom_scenario = ""
     if scenario == "Custom":
@@ -99,7 +98,7 @@ def launch_interface(story_function, global_state):
 
         try:
             while True:
-                user_input, story_response, audio_path, indicator = next(story_generator)
+                user_input, story_response, audio_path, indicator, _ = next(story_generator)  # Added "_" to unpack the extra value
 
                 if user_input:
                     story_content += f"\n\nUser: {user_input}\n"
