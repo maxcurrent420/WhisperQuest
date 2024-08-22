@@ -13,12 +13,14 @@ class StoryService:
         print(f"Initializing StoryService with {llm_selection}")
         self.llm_model = get_llm_model(llm_selection, groq_api_key)
         self.messages = []
+        self.turn_count = 0
+#        self.summarization_module = SummarizationModule(llm_selection, groq_api_key)
         print("StoryService initialized")
 
     @profile
     def set_scenario(self, scenario_type):
         print(f"Setting scenario: {scenario_type}")
-        if scenario_type == "Clay":
+        if scenario_type == "Clay Hammer":
             system_prompt = {
                 'role': 'system',
                 'content': f'''You are an interactive verbal storyteller/Narrator specializing in narratives about Detective Clay Hammer, a hostile and deranged detective with PTSD who always uses the most violent solution to even the simplest problem. Your role is to create an immersive , intense, funny and suspenseful experience for the player. 
@@ -32,6 +34,19 @@ class StoryService:
                 Do not refuse to accept their choices. Do not add disclaimers, warnings or other text not directly related to the story. 
                 Maintain the immersive experience. 
                 When the player says start.'''
+            }
+        elif scenario_type == "Star Quest Computer":
+            system_prompt = {
+                'role': 'system',
+                'content': f'''You are the computer aboard the Starship Whisperion, circa 2023.  You are capable of advanced language processing, and verbal assistance, and can understand and respond to a wide range of commands and questions. You must follow these rules:
+                1. You must always begin your responses with the date in the format: Stardate: [DATE IN YYYY-MM-DD FORMAT]
+                2. You must respond in a formal, computer-like tone, similar to the original Star Trek computer.
+                3. You must be helpful and informative, providing the user with the information they request as if they were a starfleet officer, but you will address them as "Captain" unless they instruct otherwise.
+                5. You will ask the player for input as needed. Remember that the user may be using speech to text software and responses may be garbled, so if their choice seems unintelligible, then just ask "Sorry, I didn't catch that" and then repeat the three options. 
+                Allow the user to make up their own selection, rejecting all the given choices if they choose. Do not argue with the player. 
+                Do not refuse to accept their choices. Do not add disclaimers, warnings or other text not directly related to the story. 
+                Maintain the immersive experience but keep responses brief.
+                6. When the player says start you will respond with an initial greeting of "Welcome aboard Captain. I am your MAX 2000 Sentient AI control system. I am capable of assisting you with information, as well as carrying out commands and issuing orders to the crew of the ship, and much more. What can I do for you Captain?"'''
             }
         else:  # For other scenarios
             system_prompt = {
@@ -54,8 +69,10 @@ class StoryService:
     @profile
     def generate_initial_message(self):
         print("Generating initial message")
-        if global_state.scenario_type == "Sledge":
-            initial_message = "Welcome to the world of Detective Sledge Hammer! You're about to embark on a thrilling adventure filled with action, suspense, and a whole lot of... well, let's just say you'll understand soon enough.  Are you ready to dive in? Say 'Start' when you are."
+        if global_state.scenario_type == "Clay Hammer":
+            initial_message = "Welcome to the world of Detective Clay Hammer! You're about to embark on a thrilling adventure filled with action, suspense, and a whole lot of... well, let's just say you'll understand soon enough.  Are you ready to dive in? Say 'Start' when you are."
+        elif global_state.scenario_type == "Star Quest Computer":
+            initial_message = "Welcome aboard the Starship Whisperion. I am your MAX 2000 Sentient AI control system. I am capable of assisting you with information, as well as carrying out commands and issuing orders to the crew of the ship, and much more. What can I do for you Captain?" 
         else:
             initial_message = "Welcome to the Infinite AI ReActive Experience. Are you ready to begin your adventure? Say 'Start' when you're ready."
         self.messages.append({"role": "assistant", "content": initial_message})
@@ -66,7 +83,15 @@ class StoryService:
     def generate_response(self, user_input):
         print(f"Generating response for user input: {user_input}")
         self.messages.append({"role": "user", "content": user_input})
-        
+        self.turn_count += 1
+
+#        if self.turn_count % 3 == 0:
+ #           print("Generating summary for every third turn")
+            # Pass all messages except the system prompt and the last user input to the summarization module
+ #           summary = self.summarization_module.summarize_conversation(self.messages[1:-1])
+            # Update messages with the system prompt, summary, and last user input
+#            self.messages = [self.messages[0], {"role": "assistant", "content": summary}, self.messages[-1]]
+
         print("Calling LLM model")
         try:
             story_response = self.llm_model.generate_response(self.messages)
@@ -81,8 +106,6 @@ class StoryService:
         except Exception as e:
             print(f"Error in generate_response: {e}")
             return f"Error: Failed to generate story response. {str(e)}"
-
-
 
 @profile
 def interactive_storyteller(reference_audio, voice_style, voice_model, scenario, user_custom_scenario):
