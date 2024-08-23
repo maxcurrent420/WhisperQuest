@@ -35,7 +35,7 @@ class StoryService:
                 Maintain the immersive experience. 
                 When the player says start.'''
             }
-        elif scenario_type == "Star Quest Computer":
+        elif scenario_type == "Star Quest":
             system_prompt = {
                 'role': 'system',
                 'content': f'''You are the computer aboard the Starship Whisperion, circa 2023.  You are capable of advanced language processing, and verbal assistance, and can understand and respond to a wide range of commands and questions. You must follow these rules:
