@@ -14,13 +14,13 @@ from openvoice.api import BaseSpeakerTTS, ToneColorConverter
 from RealtimeSTT import AudioToTextRecorder
 from TTS.api import TTS
 import gc
-from memory_profiler import profile
+#from memory_profiler import profile
 from config import global_state
 import edge_tts
 import asyncio
 
 class XTTSEngine:
-    @profile
+#    @profile
     def __init__(self, model_path, speaker_wav_path, language="en"):
         logging.info('Initializing TTS engine')
         self.tts = TTS(model_path, gpu=torch.cuda.is_available())
@@ -29,7 +29,7 @@ class XTTSEngine:
         self.sample_rate = 24000  # XTTS default sample rate
         self.channels = 1  # Explicitly set to mono
 
-    @profile
+ #   @profile
     def generate_audio(self, text):
         logging.info(f'Generating audio for text: {text}')
         output = io.BytesIO()
@@ -44,7 +44,7 @@ class XTTSEngine:
         return audio
 
 class AudioService:
-    @profile
+  #  @profile
     def __init__(self, en_ckpt_base, ckpt_converter, output_dir):
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         self.en_ckpt_base = en_ckpt_base
@@ -58,7 +58,7 @@ class AudioService:
         self.tone_color_converter = None
         self.temp_files = []
 
-    @profile
+   # @profile
     def set_model(self, model_name):
         if model_name in ["OpenVoice", "xttsv2", "yourtts", "UnrealSpeech", "edge_tts"]:
             self.current_model = model_name
@@ -88,7 +88,7 @@ class AudioService:
         else:
             raise ValueError(f"Unsupported model: {model_name}")
 
-    @profile
+    #@profile
     def generate_and_play_audio(self, text, ref_audio, style):
         logging.info(f'Generating audio for text: {text}')
         save_path = os.path.join(self.output_dir, 'output.wav')  # Correctly construct path
@@ -186,15 +186,15 @@ class AudioService:
             
         return save_path
 
-    @profile
+   # @profile
     def stop_audio(self):
         sd.stop()
 
-    @profile
+    #@profile
     def set_volume(self, volume):
         sd.default.volume = volume
 
-    @profile
+   # @profile
     def cleanup(self):
         """Clean up resources and temporary files."""
         logging.info("Cleaning up resources...")
@@ -238,14 +238,14 @@ class AudioService:
 
 
 class EnhancedAudioToTextRecorder(AudioToTextRecorder):
-    @profile
+    #@profile
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.last_reset_time = time.time()
         self.reset_interval = 40  # Reset every 40 seconds if no input
         self.max_record_time = 30  # Maximum recording time in seconds
 
-    @profile
+    #@profile
     def reset(self):
         self.is_recording = False
         self.start_recording_on_voice_activity = False
@@ -257,7 +257,7 @@ class EnhancedAudioToTextRecorder(AudioToTextRecorder):
         self._set_state("inactive")
         self.last_reset_time = time.time()
     
-    @profile
+    #@profile
     def clear_audio_queue(self):
         while not self.audio_queue.empty():
             try:
@@ -265,7 +265,7 @@ class EnhancedAudioToTextRecorder(AudioToTextRecorder):
             except queue.Empty:
                 break
 
-    @profile
+    #@profile
     def check_and_reset(self):
         current_time = time.time()
         if current_time - self.last_reset_time > self.reset_interval:
@@ -274,7 +274,7 @@ class EnhancedAudioToTextRecorder(AudioToTextRecorder):
             return True
         return False
 
-    @profile
+    #@profile
     def text(self):
         start_time = time.time()
         while time.time() - start_time < self.max_record_time:
