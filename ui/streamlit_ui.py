@@ -7,7 +7,12 @@ from services.audio_service import AudioService
 import tempfile
 from PIL import Image
 import time
+import streamlit as st
+from bokeh.models.widgets import Button
+from bokeh.models import CustomJS
+from streamlit_bokeh_events import streamlit_bokeh_events
 
+        
 def launch_interface(story_function, global_state):
     st.set_page_config(
         page_title="WhisperQuest",
@@ -79,6 +84,14 @@ def launch_interface(story_function, global_state):
     if start_button:
         feedback_placeholder.text("Thinking...")
         story_output.empty()
+        
+        # Scenario image display
+        if scenario == "Clay Hammer":
+            scenario_image = Image.open("./images/Clay_Hammer.jpg")
+            st.image(scenario_image, caption="Detective Clay Hammer", width=672)
+        elif scenario == "Star Quest":
+            scenario_image = Image.open("./images/Star_Quest.jpg")
+            st.image(scenario_image, caption="The Starship Whisperion", width=300)
 
         # Start the story generation
         audio_service.set_model(voice_model)
@@ -119,6 +132,9 @@ def launch_interface(story_function, global_state):
     with st.sidebar:
         st.subheader("Speak to the Storyteller")
         st.text("Say 'start' to begin, and choose your actions as the story unfolds.")
+stt_button = Button(label="Speak", width=100)
+
+
 
 if __name__ == "__main__":
     launch_interface(interactive_storyteller, global_state)
