@@ -158,11 +158,11 @@ docker run -p 7860:7860 storyteller
 
 #2. Choose a scenario. Enter in your custom scenario, if desired.
 
-#3. Select "OpenVoice" for the voice model.
+#3. Select "OpenVoice" for the voice cloning model, or leave it as is, to use Microsoft's [edge_tts](https://github.com/rany2/edge-tts).
 
-#4. Choose "Local" for the LLM source.
+#4. Choose "Local" for the LLM source if you would like to use a local model, or leave it on Groq (set your API key in the config first!) to have near-instant text generation.
 
-#5. Leave reference audio empty.
+#5. Upload a reference audio if using OpenVoice.
 
 #6. Optionally, select a voice style (if using OpenVoice to make a voice clone).
 
