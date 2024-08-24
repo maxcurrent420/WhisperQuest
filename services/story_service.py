@@ -74,7 +74,7 @@ class StoryService:
         elif global_state.scenario_type == "Star Quest Computer":
             initial_message = "Welcome aboard the Starship Whisperion. I am your MAX 2000 Sentient AI control system. I am capable of assisting you with information, as well as carrying out commands and issuing orders to the crew of the ship, and much more. What can I do for you Captain?" 
         else:
-            initial_message = "Welcome to the Infinite AI ReActive Experience. Are you ready to begin your adventure? Say 'Start' when you're ready."
+            initial_message = "Welcome to the WhisperQuest, the infinite story game. Are you ready to begin your adventure? Say 'Start' when you're ready."
         self.messages.append({"role": "assistant", "content": initial_message})
         print(f"Initial message: {initial_message}")
         return initial_message
