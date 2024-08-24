@@ -8,10 +8,6 @@ import tempfile
 from PIL import Image
 import time
 import streamlit as st
-from bokeh.models.widgets import Button
-from bokeh.models import CustomJS
-from streamlit_bokeh_events import streamlit_bokeh_events
-
         
 def launch_interface(story_function, global_state):
     st.set_page_config(
