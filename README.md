@@ -20,7 +20,7 @@ License***
 
 
 <p align="right">
-<img src="./Header.png" alt="WhisperQuest" title="WhisperQuest"/>
+<img src="./WhisperQuestScreenshot.png" alt="Screenshot" title="Screenshot"/>
 </p>
 
 # This program provides a fun and engaging interactive storytelling experience via voice input/output. 
