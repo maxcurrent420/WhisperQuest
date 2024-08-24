@@ -4,11 +4,11 @@ from aimodels.llm_models import get_llm_model
 from config import global_state
 from services.audio_service import AudioService, EnhancedAudioToTextRecorder
 import gc
-from memory_profiler import profile
+#from memory_profiler import profile
 
 
 class StoryService:
-    @profile
+ #   @profile
     def __init__(self, llm_selection, groq_api_key=None):
         print(f"Initializing StoryService with {llm_selection}")
         self.llm_model = get_llm_model(llm_selection, groq_api_key)
@@ -17,7 +17,7 @@ class StoryService:
 #        self.summarization_module = SummarizationModule(llm_selection, groq_api_key)
         print("StoryService initialized")
 
-    @profile
+  #  @profile
     def set_scenario(self, scenario_type):
         print(f"Setting scenario: {scenario_type}")
         if scenario_type == "Clay Hammer":
@@ -66,7 +66,7 @@ class StoryService:
         self.messages = [system_prompt]
         print("Scenario set")
 
-    @profile
+   # @profile
     def generate_initial_message(self):
         print("Generating initial message")
         if global_state.scenario_type == "Clay Hammer":
@@ -79,7 +79,7 @@ class StoryService:
         print(f"Initial message: {initial_message}")
         return initial_message
 
-    @profile
+    #@profile
     def generate_response(self, user_input):
         print(f"Generating response for user input: {user_input}")
         self.messages.append({"role": "user", "content": user_input})
@@ -107,7 +107,7 @@ class StoryService:
             print(f"Error in generate_response: {e}")
             return f"Error: Failed to generate story response. {str(e)}"
 
-@profile
+#@profile
 def interactive_storyteller(reference_audio, voice_style, voice_model, scenario, user_custom_scenario):
     """
     Main function for the interactive story teller.
