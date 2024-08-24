@@ -1,16 +1,16 @@
 import logging
 from aimodels.llm_models import get_llm_model
 from config import global_state
-from memory_profiler import profile
+#from memory_profiler import profile
 
 class SummarizationModule:
-    @profile
+ #   @profile
     def __init__(self, llm_selection, groq_api_key=None):
         print(f"Initializing SummarizationModule with {llm_selection}")
         self.llm_model = get_llm_model(llm_selection, groq_api_key)
         print("SummarizationModule initialized")
 
-    @profile
+  #  @profile
     def summarize_conversation(self, messages):
         print("Summarizing conversation...")
         summary_prompt = {
