@@ -91,7 +91,7 @@ def launch_interface(story_function, global_state):
             st.image(scenario_image, caption="Detective Clay Hammer", width=672)
         elif scenario == "Star Quest":
             scenario_image = Image.open("./images/Star_Quest.jpg")
-            st.image(scenario_image, caption="The Starship Whisperion", width=300)
+            st.image(scenario_image, caption="The Starship Whisperion", width=672)
 
         # Start the story generation
         audio_service.set_model(voice_model)
