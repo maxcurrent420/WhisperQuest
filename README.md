@@ -49,6 +49,8 @@
 
 🎨 **User Interface Enhancements:** Refine the user interface for a more seamless and intuitive user experience.
 
+🎧 **Scenario Soundtracks**: Rad music to listen to while awaiting local llm/voice generation, or just because.
+
 📚 **Documentation and Testing:** Enhance the program's documentation and implement more comprehensive testing for improved reliability.
 
 ### 📄 Usage
