@@ -18,6 +18,11 @@ License***
 
 ## AI Powered Verbal Choose Your Own Adventure Game
 
+
+<p align="right">
+<img src="./Header.png" alt="WhisperQuest" title="WhisperQuest"/>
+</p>
+
 # This program provides a fun and engaging interactive storytelling experience via voice input/output. 
 
 ## Functionalities
