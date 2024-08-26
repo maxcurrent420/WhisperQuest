@@ -124,11 +124,6 @@ def launch_interface(story_function, global_state):
         if audio_service:
             audio_service.cleanup()
 
-    # User input (microphone)
-    with st.sidebar:
-        st.subheader("Speak to the Storyteller")
-        st.text("Say 'start' to begin, and choose your actions as the story unfolds.")
-stt_button = Button(label="Speak", width=100)
 
 
 
