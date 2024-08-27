@@ -286,4 +286,3 @@ class EnhancedAudioToTextRecorder(AudioToTextRecorder):
         self.stop()
         return super().text().strip()
 
-
