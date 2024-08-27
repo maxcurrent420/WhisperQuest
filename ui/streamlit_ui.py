@@ -1,3 +1,5 @@
+# --- ui/streamlit_ui.py ---
+
 import streamlit as st
 import os
 from services.story_service import StoryService
@@ -8,7 +10,8 @@ import tempfile
 from PIL import Image
 import time
 import streamlit as st
-        
+from services.image_service import ImageService  # Import the ImageService
+
 def launch_interface(story_function, global_state):
     st.set_page_config(
         page_title="WhisperQuest",
@@ -68,6 +71,7 @@ def launch_interface(story_function, global_state):
     # Story Output
     story_output = st.empty()
     feedback_placeholder = st.empty()
+    image_placeholder = st.empty()  # Placeholder for the image
 
     # Initialize services
     audio_service = AudioService(
@@ -75,19 +79,13 @@ def launch_interface(story_function, global_state):
     )
     global_state.audio_service = audio_service
     global_state.story_service = StoryService(global_state.llm_selection, global_state.groq_api_key)
+    image_service = ImageService(global_state.llm_selection, global_state.groq_api_key)
 
     # Loop Control
     if start_button:
         feedback_placeholder.text("Thinking...")
         story_output.empty()
-        
-        # Scenario image display
-        if scenario == "Clay Hammer":
-            scenario_image = Image.open("./images/Clay_Hammer.jpg")
-            st.image(scenario_image, caption="Detective Clay Hammer", width=672)
-        elif scenario == "Star Quest":
-            scenario_image = Image.open("./images/Star_Quest.jpg")
-            st.image(scenario_image, caption="The Starship Whisperion", width=672)
+        image_placeholder.empty()  # Clear the image placeholder
 
         # Start the story generation
         audio_service.set_model(voice_model)
@@ -107,13 +105,20 @@ def launch_interface(story_function, global_state):
 
         try:
             while True:
-                user_input, story_response, audio_path, indicator, _ = next(story_generator)  # Added "_" to unpack the extra value
+                user_input, story_response, audio_path, indicator, image_path = next(story_generator)
 
                 if user_input:
                     story_content += f"\n\nUser: {user_input}\n"
                 if story_response:
                     story_content += f"\n{story_response}\n"
                     story_output.markdown(story_content)
+
+                if image_path:
+                    try:
+                        image = Image.open(image_path)
+                        image_placeholder.image(image, caption="Generated Image", use_column_width=True)
+                    except Exception as e:
+                        print(f"Error displaying image: {e}")
 
                 feedback_placeholder.text(indicator)
 
@@ -123,9 +128,10 @@ def launch_interface(story_function, global_state):
             feedback_placeholder.text("Story has ended.")
         if audio_service:
             audio_service.cleanup()
-
-
+        if image_service:
+            image_service.cleanup_temporary_files()
 
 
 if __name__ == "__main__":
     launch_interface(interactive_storyteller, global_state)
+
