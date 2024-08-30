@@ -80,7 +80,7 @@ python main.py
 
 📝 **Choose a Scenario:** Select a pre-defined scenario (Thriller) or input your own custom scenario in the provided text box.
 
-🗣️ **Select a Voice Model:** Choose from different voice models, including edge_tts, OpenVoice (Supports Voice Cloning!), xttsv2, yourtts, or UnrealSpeech (get a free API key at [UnrealSpeech](https://unrealspeech.com/)).
+🗣️ **Select a Voice Model:** Choose from different voice models, including edge_tts, MeloTTS, OpenVoice (Supports Voice Cloning!), xttsv2, yourtts, or UnrealSpeech (get a free API key at [UnrealSpeech](https://unrealspeech.com/)).
 
 🤖 **Select LLM Source:** Choose between "Local" (using your local LLM server) or "Groq" (using the Groq API).
 
@@ -172,6 +172,17 @@ docker run -p 7860:7860 storyteller
 #8. You'll hear the welcome message: "Welcome to the WhisperQuest, the infinite story game. Are you ready to begin your adventure? Say 'Start' when you're ready."
 
 #9. Speak "Start".
+
+
+Aug 29: Added [Melo TTS for fast Real time TTS on CPU](https://github.com/myshell-ai/MeloTTS/blob/main/docs/install.md):
+```
+git clone https://github.com/myshell-ai/MeloTTS.git
+cd MeloTTS
+pip install -e .
+python -m unidic download
+```
+
+
 
 #10. The story will continue based on your spoken choices.
 
