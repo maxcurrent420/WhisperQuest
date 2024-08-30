@@ -27,9 +27,9 @@
 
 📚 **Storytelling with Different Genres:** Choose from the default Thriller scenario, or create your own custom story.
 
-🗣️ **Dynamic Voice Generation:** The story can be spoken aloud with different voice styles if using OpenVoice, making the experience even more immersive.
+🗣️ **Dynamic Voice Generation:** The story can be spoken aloud with different voice styles if using OpenVoice, making the experience even more immersive. Plus 5 other speech options!
 
-🎙️ **Voice Cloning:** Use reference audio to personalize the story's voice with your own voice.
+🎙️ **Voice Cloning:** Use reference audio with OpenVoice to personalize the story's voice with your own voice.
 
 🖼️ **Scene Image Generation:** Visualize the scenes with AI-generated images based on the narrative. Currently the the [Pollinations API](https://pollinations.ai/) is used for this purpose..
 
