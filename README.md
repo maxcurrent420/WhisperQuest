@@ -157,7 +157,13 @@ docker run -p 7860:7860 storyteller
 
 #2. Choose a scenario. Enter in your custom scenario, if desired.
 
-#3. Select "OpenVoice" for the voice cloning model, or leave it as is, to use Microsoft's [edge_tts](https://github.com/rany2/edge-tts).
+#3. Select "OpenVoice" for the voice cloning model, or leave it as is, to use Microsoft's [edge_tts](https://github.com/rany2/edge-tts). Aug 29: Added [Melo TTS for fast Real time TTS on CPU](https://github.com/myshell-ai/MeloTTS/blob/main/docs/install.md):
+```
+git clone https://github.com/myshell-ai/MeloTTS.git
+cd MeloTTS
+pip install -e .
+python -m unidic download
+```
 
 #4. Choose "Local" for the LLM source if you would like to use a local model, or leave it on Groq (set your API key in the config first!) to have near-instant text generation.
 
@@ -172,17 +178,6 @@ docker run -p 7860:7860 storyteller
 #8. You'll hear the welcome message: "Welcome to the WhisperQuest, the infinite story game. Are you ready to begin your adventure? Say 'Start' when you're ready."
 
 #9. Speak "Start".
-
-
-Aug 29: Added [Melo TTS for fast Real time TTS on CPU](https://github.com/myshell-ai/MeloTTS/blob/main/docs/install.md):
-```
-git clone https://github.com/myshell-ai/MeloTTS.git
-cd MeloTTS
-pip install -e .
-python -m unidic download
-```
-
-
 
 #10. The story will continue based on your spoken choices.
 
