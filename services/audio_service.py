@@ -6,6 +6,7 @@ import soundfile as sf
 import logging
 import queue
 import time
+import nltk
 import io
 import requests
 import tempfile
@@ -14,13 +15,12 @@ from openvoice.api import BaseSpeakerTTS, ToneColorConverter
 from RealtimeSTT import AudioToTextRecorder
 from TTS.api import TTS
 import gc
-#from memory_profiler import profile
 from config import global_state
 import edge_tts
 import asyncio
+from melo.api import TTS as MeloTTS
 
 class XTTSEngine:
-#    @profile
     def __init__(self, model_path, speaker_wav_path, language="en"):
         logging.info('Initializing TTS engine')
         self.tts = TTS(model_path, gpu=torch.cuda.is_available())
@@ -29,7 +29,6 @@ class XTTSEngine:
         self.sample_rate = 24000  # XTTS default sample rate
         self.channels = 1  # Explicitly set to mono
 
- #   @profile
     def generate_audio(self, text):
         logging.info(f'Generating audio for text: {text}')
         output = io.BytesIO()
@@ -43,8 +42,28 @@ class XTTSEngine:
             audio = audio[:, 0]  # Convert to mono if stereo
         return audio
 
+class MeloTTSEngine:
+    def __init__(self, language='EN', device='cpu'):
+        # Download required NLTK resources
+        try:
+            nltk.data.find('taggers/averaged_perceptron_tagger')
+        except LookupError:
+            nltk.download('averaged_perceptron_tagger')
+        
+        try:
+            nltk.data.find('taggers/averaged_perceptron_tagger_eng')
+        except LookupError:
+            nltk.download('averaged_perceptron_tagger_eng')
+        
+        self.model = MeloTTS(language=language, device=device)
+        self.speaker_ids = self.model.hps.data.spk2id
+        self.speed = 1.0
+
+    def generate_audio(self, text, accent='EN-US', output_path='output.wav'):
+        self.model.tts_to_file(text, self.speaker_ids[accent], output_path, speed=self.speed)
+        return output_path
+
 class AudioService:
-  #  @profile
     def __init__(self, en_ckpt_base, ckpt_converter, output_dir):
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         self.en_ckpt_base = en_ckpt_base
@@ -56,11 +75,11 @@ class AudioService:
         self.yourtts_engine = None
         self.openvoice_model = None
         self.tone_color_converter = None
+        self.melotts_engine = None
         self.temp_files = []
 
-   # @profile
     def set_model(self, model_name):
-        if model_name in ["OpenVoice", "xttsv2", "yourtts", "UnrealSpeech", "edge_tts"]:
+        if model_name in ["OpenVoice", "xttsv2", "yourtts", "UnrealSpeech", "edge_tts", "MeloTTS"]:
             self.current_model = model_name
             if self.current_model == "OpenVoice":
                 if self.openvoice_model is None:
@@ -71,32 +90,29 @@ class AudioService:
                     self.en_source_se = torch.load(f'{self.en_ckpt_base}/en_default_se.pth').to(self.device)
             elif self.current_model == "xttsv2":
                 if self.xttsv2_engine is None:
-                    # Use ref_audio only if it's a valid file path
                     if os.path.exists(ref_audio) and ref_audio.lower().endswith(".wav"): 
                         self.xttsv2_engine = XTTSEngine(model_path="tts_models/multilingual/multi-dataset/xtts_v2", speaker_wav_path=ref_audio)
                     else:
-                        # If ref_audio is not a valid WAV file, don't use it
                         self.xttsv2_engine = XTTSEngine(model_path="tts_models/multilingual/multi-dataset/xtts_v2", speaker_wav_path="")
             elif self.current_model == "yourtts":
                 if self.yourtts_engine is None:
-                    # Use ref_audio only if it's a valid file path
                     if os.path.exists(ref_audio) and ref_audio.lower().endswith(".wav"): 
                         self.yourtts_engine = XTTSEngine(model_path="tts_models/multilingual/multi-dataset/your_tts", speaker_wav_path=ref_audio)
                     else:
-                        # If ref_audio is not a valid WAV file, don't use it
                         self.yourtts_engine = XTTSEngine(model_path="tts_models/multilingual/multi-dataset/your_tts", speaker_wav_path="")
+            elif self.current_model == "MeloTTS":
+                if self.melotts_engine is None:
+                    self.melotts_engine = MeloTTSEngine()
         else:
             raise ValueError(f"Unsupported model: {model_name}")
 
-    #@profile
     def generate_and_play_audio(self, text, ref_audio, style):
         logging.info(f'Generating audio for text: {text}')
-        save_path = os.path.join(self.output_dir, 'output.wav')  # Correctly construct path
-
+        save_path = os.path.join(self.output_dir, 'output.wav')
 
         if self.current_model == "OpenVoice":
             if self.openvoice_model is not None:
-                src_path = os.path.join(self.output_dir, 'tmp.wav')  # Correctly construct path
+                src_path = os.path.join(self.output_dir, 'tmp.wav')
                 self.openvoice_model.tts(text, src_path, speaker=style, language='en')
                 target_se, _ = se_extractor.get_se(ref_audio, self.tone_color_converter, target_dir='processed', vad=True)
                 self.tone_color_converter.convert(
@@ -108,41 +124,35 @@ class AudioService:
                 )
         elif self.current_model == "xttsv2":
             if self.xttsv2_engine is None:
-                # Use ref_audio only if it's a valid file path
                 if os.path.exists(ref_audio) and ref_audio.lower().endswith(".wav"): 
                     self.xttsv2_engine = XTTSEngine(model_path="tts_models/multilingual/multi-dataset/xtts_v2", speaker_wav_path=ref_audio)
                 else:
-                    # If ref_audio is not a valid WAV file, don't use it
                     self.xttsv2_engine = XTTSEngine(model_path="tts_models/multilingual/multi-dataset/xtts_v2", speaker_wav_path="")
             audio = self.xttsv2_engine.generate_audio(text)
             sf.write(save_path, audio, self.xttsv2_engine.sample_rate)
         elif self.current_model == "yourtts":
             if self.yourtts_engine is None:
-                # Use ref_audio only if it's a valid file path
                 if os.path.exists(ref_audio) and ref_audio.lower().endswith(".wav"): 
                     self.yourtts_engine = XTTSEngine(model_path="tts_models/multilingual/multi-dataset/your_tts", speaker_wav_path=ref_audio)
                 else:
-                    # If ref_audio is not a valid WAV file, don't use it
                     self.yourtts_engine = XTTSEngine(model_path="tts_models/multilingual/multi-dataset/your_tts", speaker_wav_path="")
             audio = self.yourtts_engine.generate_audio(text)
             sf.write(save_path, audio, self.yourtts_engine.sample_rate)
-        elif self.current_model == "edge_tts":  # New case for edge_tts
-            voice = "en-US-SteffanNeural"  # Set the desired voice
-            output_file = os.path.join(self.output_dir, 'output.wav')  # Save as mp3 file
+        elif self.current_model == "edge_tts":
+            voice = "en-US-SteffanNeural"
+            output_file = os.path.join(self.output_dir, 'output.wav')
 
             async def generate_audio():
                 communicate = edge_tts.Communicate(text, voice)
                 await communicate.save(output_file)
 
-            # Run the async function
             asyncio.run(generate_audio())
-            save_path = output_file  # Update save path to the edge_tts output
-
+            save_path = output_file
         elif self.current_model == "UnrealSpeech":
             url = "https://api.v7.unrealspeech.com/speech"
             payload = {
                 "Text": text,
-                "VoiceId": "Dan",  # You can make this configurable
+                "VoiceId": "Dan",
                 "Bitrate": "192k",
                 "Speed": "0",
                 "Pitch": "1",
@@ -152,7 +162,7 @@ class AudioService:
             self.headers = {
                 "accept": "application/json",
                 "Content-Type": "application/json",
-                "Authorization": f"Bearer {global_state.unrealspeech_api_key}"  # Access API key from GlobalState
+                "Authorization": f"Bearer {global_state.unrealspeech_api_key}"
             }
             response = requests.post(url, json=payload, headers=self.headers)
             if response.status_code == 200:
@@ -173,6 +183,10 @@ class AudioService:
             else:
                 logging.error(f"Error from UnrealSpeech API: {response.text}")
                 return None
+        elif self.current_model == "MeloTTS":
+            if self.melotts_engine is None:
+                self.melotts_engine = MeloTTSEngine()
+            save_path = self.melotts_engine.generate_audio(text, accent='EN-US', output_path=save_path)
 
         # Play the generated audio
         try:
@@ -186,27 +200,20 @@ class AudioService:
             
         return save_path
 
-   # @profile
     def stop_audio(self):
         sd.stop()
 
-    #@profile
     def set_volume(self, volume):
         sd.default.volume = volume
 
-   # @profile
     def cleanup(self):
-        """Clean up resources and temporary files."""
         logging.info("Cleaning up resources...")
         
-        # Stop any playing audio
         self.stop_audio()
 
-        # Clear CUDA cache if using GPU
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
 
-        # Delete temporary files
         for temp_file in self.temp_files:
             try:
                 os.remove(temp_file)
@@ -216,7 +223,6 @@ class AudioService:
 
         self.temp_files.clear()
 
-        # Clear other large objects
         if self.xttsv2_engine:
             del self.xttsv2_engine
             self.xttsv2_engine = None
@@ -229,23 +235,21 @@ class AudioService:
         if self.tone_color_converter:
             del self.tone_color_converter
             self.tone_color_converter = None
-
-        # Manually trigger garbage collection
+        if self.melotts_engine:
+            del self.melotts_engine
+            self.melotts_engine = None
 
         gc.collect()
 
         logging.info("Cleanup completed")
 
-
 class EnhancedAudioToTextRecorder(AudioToTextRecorder):
-    #@profile
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.last_reset_time = time.time()
-        self.reset_interval = 40  # Reset every 40 seconds if no input
-        self.max_record_time = 30  # Maximum recording time in seconds
+        self.reset_interval = 40
+        self.max_record_time = 30
 
-    #@profile
     def reset(self):
         self.is_recording = False
         self.start_recording_on_voice_activity = False
@@ -257,7 +261,6 @@ class EnhancedAudioToTextRecorder(AudioToTextRecorder):
         self._set_state("inactive")
         self.last_reset_time = time.time()
     
-    #@profile
     def clear_audio_queue(self):
         while not self.audio_queue.empty():
             try:
@@ -265,7 +268,6 @@ class EnhancedAudioToTextRecorder(AudioToTextRecorder):
             except queue.Empty:
                 break
 
-    #@profile
     def check_and_reset(self):
         current_time = time.time()
         if current_time - self.last_reset_time > self.reset_interval:
@@ -274,7 +276,6 @@ class EnhancedAudioToTextRecorder(AudioToTextRecorder):
             return True
         return False
 
-    #@profile
     def text(self):
         start_time = time.time()
         while time.time() - start_time < self.max_record_time:
@@ -285,4 +286,3 @@ class EnhancedAudioToTextRecorder(AudioToTextRecorder):
         logging.info("Max recording time reached, stopping recording")
         self.stop()
         return super().text().strip()
-
