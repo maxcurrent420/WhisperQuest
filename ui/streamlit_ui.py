@@ -39,7 +39,7 @@ def launch_interface(story_function, global_state):
 
     # Apply custom header styling
     st.markdown('<h1 class="custom-header">🎭 WhisperQuest</h1>', unsafe_allow_html=True)
-    st.subheader("Embark on an interactive storytelling journey limited only by your imagination and token context!")
+    st.subheader("Your adventure awaits, limited only by your imagination and token context!")
 
     # Scenario Selection
     scenario_options = ["Star Quest", "Max Hammer", "Custom", "Thriller", "Fantasy", "Sci-Fi", "Mystery"]
@@ -49,7 +49,7 @@ def launch_interface(story_function, global_state):
         user_custom_scenario = st.text_input("Enter your custom scenario:", key="custom_scenario")
 
     # Voice Model Selection
-    voice_model_options = ["edge_tts", "OpenVoice", "xttsv2", "yourtts", "UnrealSpeech"]
+    voice_model_options = ["edge_tts", "MeloTTS", "OpenVoice", "xttsv2", "yourtts", "UnrealSpeech"]
     voice_model = st.selectbox("Select a voice model:", voice_model_options, key="voice_model")
 
     # LLM Source Selection
@@ -131,6 +131,9 @@ def launch_interface(story_function, global_state):
         if image_service:
             image_service.cleanup_temporary_files()
 
+    with st.sidebar:
+        st.subheader("Speak to the Storyteller")
+        st.text("Say 'start' to begin, and choose your actions as the story unfolds.")
 
 if __name__ == "__main__":
     launch_interface(interactive_storyteller, global_state)
