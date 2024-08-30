@@ -16,3 +16,4 @@ requests>=2.31.0
 base64>=2.0.1
 PIL>=9.4.0
 tempfile>=1.0
+nltk>=3.8.2
