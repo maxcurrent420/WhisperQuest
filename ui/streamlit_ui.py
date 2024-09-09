@@ -11,6 +11,7 @@ from PIL import Image
 import time
 import streamlit as st
 from services.image_service import ImageService  # Import the ImageService
+from memory_profiler import profile
 
 def launch_interface(story_function, global_state):
     st.set_page_config(
@@ -42,23 +43,31 @@ def launch_interface(story_function, global_state):
     st.subheader("Your adventure awaits, limited only by your imagination and token context!")
 
     # Scenario Selection
-    scenario_options = ["Star Quest", "Max Hammer", "Custom", "Thriller", "Fantasy", "Sci-Fi", "Mystery"]
+    scenario_options = ["Star Quest", "Logo Specialist", "Max Hammer", "Custom", "Thriller", "Fantasy", "Sci-Fi", "Mystery"]
     scenario = st.selectbox("Choose a scenario:", scenario_options, key="scenario")
     user_custom_scenario = ""
     if scenario == "Custom":
         user_custom_scenario = st.text_input("Enter your custom scenario:", key="custom_scenario")
 
     # Voice Model Selection
-    voice_model_options = ["edge_tts", "MeloTTS", "OpenVoice", "xttsv2", "yourtts", "UnrealSpeech"]
+    voice_model_options = ["edge_tts", "MeloTTS", "OpenVoiceV2", "xttsv2", "yourtts", "UnrealSpeech"]
     voice_model = st.selectbox("Select a voice model:", voice_model_options, key="voice_model")
 
     # LLM Source Selection
-    llm_source = st.radio("Choose LLM Source", ("Groq", "Local"), key="llm_source")
+    llm_source = st.radio("Choose LLM Source", ("Groq", "Local", "Gemini"), key="llm_source")
     global_state.llm_selection = llm_source
 
     # Reference Audio Upload
     reference_audio = None
-    if voice_model == "OpenVoice":
+    supported_engines = {
+    "OpenVoiceV2": True,
+    "yourtts": True,
+    "xttsv2": True  # Add more engines as needed
+}
+
+    if voice_model in supported_engines and supported_engines[voice_model]:
+        playback_speed = st.slider("Playback Speed", min_value=0.1, max_value=1.5, value=global_state.playback_speed, step=0.1, key="playback_speed")
+        global_state.playback_speed = playback_speed
         reference_audio = st.file_uploader("Upload reference audio (optional):", type=["wav", "mp3"], key="reference_audio")
 
     # Voice Style Selection
@@ -75,11 +84,15 @@ def launch_interface(story_function, global_state):
 
     # Initialize services
     audio_service = AudioService(
-        global_state.en_ckpt_base, global_state.ckpt_converter, global_state.output_dir
-    )
+    en_ckpt_base=global_state.en_ckpt_base,
+    ckpt_converter=global_state.ckpt_converter,
+    en_ckpt_base_v2=global_state.en_ckpt_base_v2,
+    ckpt_converter_v2=global_state.ckpt_converter_v2,
+    output_dir=global_state.output_dir
+)
     global_state.audio_service = audio_service
-    global_state.story_service = StoryService(global_state.llm_selection, global_state.groq_api_key)
-    image_service = ImageService(global_state.llm_selection, global_state.groq_api_key)
+    global_state.story_service = StoryService(global_state.llm_selection, global_state.groq_api_key, global_state.gemini_api_key)
+    image_service = ImageService(global_state.llm_selection, global_state.gemini_api_key,)
 
     # Loop Control
     if start_button:
@@ -126,10 +139,11 @@ def launch_interface(story_function, global_state):
 
         except StopIteration:
             feedback_placeholder.text("Story has ended.")
-        if audio_service:
-            audio_service.cleanup()
+        #audio_service.cleanup()  # Moved to after the loop
         if image_service:
             image_service.cleanup_temporary_files()
+        if audio_service:
+            audio_service.cleanup()
 
     with st.sidebar:
         st.subheader("Speak to the Storyteller")
@@ -137,4 +151,3 @@ def launch_interface(story_function, global_state):
 
 if __name__ == "__main__":
     launch_interface(interactive_storyteller, global_state)
-
