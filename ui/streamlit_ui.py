@@ -43,7 +43,7 @@ def launch_interface(story_function, global_state):
     st.subheader("Your adventure awaits, limited only by your imagination and token context!")
 
     # Scenario Selection
-    scenario_options = ["Star Quest", "Logo Specialist", "Max Hammer", "Custom", "Thriller", "Fantasy", "Sci-Fi", "Mystery"]
+    scenario_options = ["Star Quest", "Max Hammer", "Custom", "Thriller", "Fantasy", "Sci-Fi", "Mystery"]
     scenario = st.selectbox("Choose a scenario:", scenario_options, key="scenario")
     user_custom_scenario = ""
     if scenario == "Custom":
