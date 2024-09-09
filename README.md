@@ -1,5 +1,5 @@
 <p align="center">
-<img src="./Header.png" alt="WhisperQuest" title="WhisperQuest"/>
+<img src="./WhisperQuest.jpg" alt="WhisperQuest" title="WhisperQuest"/>
 </p>
 
 ***Modified Non-Commercial Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License***
