@@ -66,7 +66,7 @@ def launch_interface(story_function, global_state):
 }
 
     if voice_model in supported_engines and supported_engines[voice_model]:
-        playback_speed = st.slider("Playback Speed", min_value=0.1, max_value=1.5, value=global_state.playback_speed, step=0.1, key="playback_speed")
+        playback_speed = st.slider("Playback Speed", min_value=0.1, max_value=1.5, value=float(global_state.playback_speed), step=0.1, key="playback_speed")
         global_state.playback_speed = playback_speed
         reference_audio = st.file_uploader("Upload reference audio (optional):", type=["wav", "mp3"], key="reference_audio")
 
