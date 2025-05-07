@@ -102,7 +102,7 @@ The application uses OpenVoice for voice cloning, allowing you to create a uniqu
 
 #### 🖼️ Image Generation
 
-Planned/Not fully implemented: With image generation enabled, the application utilizes an AI model (currently Segmind API) to generate images based on the story's scenes. The LLM will provide descriptions of the scenes, and the image generation service will create corresponding images. This is commented out at the moment.
+Partially implemented: With image generation enabled, the application utilizes an AI model (currently Pollinations API) to generate images based on the story's scenes. The LLM will provide descriptions of the scenes, and the image generation service will create corresponding images.
 
 ### 🗂️ Code Structure
 
